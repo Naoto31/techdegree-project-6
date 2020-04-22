@@ -34,20 +34,45 @@ function addPhraseToDisplay(arr) {
         } else {
             li.className = 'letter';
         }
-        
+
         ul.appendChild(li);
 
     }
 }
 
 const phraseArray = getRandomPhraseAsArray(phrases);
-addPhraseToDisplay(phraseArray); 
+addPhraseToDisplay(phraseArray);
 
 
-// Create a checkLetter function
+// function checkLetter
+const lengthOfPhrase = phraseArray.length;
 
-function checkLetter () {
+function checkLetter(button) {
+    
+    //Get a button letter
+    for (let i = 0; i < button.length; i += 1) {
+        document.querySelectorAll("button")[i].addEventListener('click', function () {
+            var buttonLetter = this.innerHTML;
+            
+            // get a phraseArrayLetter
+            for (let i = 0; i < lengthOfPhrase; i += 1) {
+                var phraseArrayLetter = phraseArray[i].toLowerCase();
+                let li = document.getElementsByClassName('letter')[i];
 
+                //Condition
+                if (buttonLetter === phraseArrayLetter) {
+                    li.classList.add('show');
+                    var correctLetter = phraseArrayLetter;
+                    return correctLetter;
+                } else {
+                    return null;
 
+                }
+            }
+        });
+
+    }
 }
 
+const numberOfButtons = document.querySelectorAll("button");
+checkLetter(numberOfButtons);
