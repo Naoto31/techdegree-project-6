@@ -76,7 +76,9 @@ qwerty.addEventListener('click', e => {
             const againButton = document.getElementsByClassName('btn__reset');
             div.classList.add('win');
             div.appendChild(h3);
-            h3.innerHTML = 'You Win!';
+            var answerText = phraseArray.join('');
+            h3.innerHTML = `You Win! It was "${answerText}!"`;
+
             for (let i = 0; i < againButton.length; i += 1) {
                 againButton[i].innerHTML = 'Play again';
             }
@@ -100,9 +102,13 @@ qwerty.addEventListener('click', e => {
 
             missNumber = 0;
 
+            answerText.length = 0;
+
             // Add a new phrase
-            let newPhraseArray = getRandomPhraseAsArray(phrases);
-            addPhraseToDisplay(newPhraseArray);
+            let PhraseArray = getRandomPhraseAsArray(phrases);
+            addPhraseToDisplay(PhraseArray);
+
+            var newAnswerText = newPhraseArray.join('');
 
             // Remove h3 text
             overlay.addEventListener('click', (e) => {
@@ -122,7 +128,8 @@ qwerty.addEventListener('click', e => {
             const tryButton = document.getElementsByClassName('btn__reset');
             div.appendChild(h3);
             div.classList.add('lose');
-            h3.innerHTML = 'You Lose!';
+            var answerText = phraseArray.join('');
+            h3.innerHTML = `You Lose! It was ${answerText}!`;
             for (let i = 0; i < tryButton.length; i += 1) {
                 tryButton[i].innerHTML = 'Try again';
             }
@@ -146,9 +153,10 @@ qwerty.addEventListener('click', e => {
 
             missNumber = 0;
 
+            phraseArray = 0;
             // Add a new phrase
-            let newPhraseArray = getRandomPhraseAsArray(phrases);
-            addPhraseToDisplay(newPhraseArray);
+            let PhraseArray = getRandomPhraseAsArray(phrases);
+            addPhraseToDisplay(PhraseArray);
 
             // Remove h3 text
             overlay.addEventListener('click', (e) => {
@@ -200,7 +208,9 @@ document.addEventListener('keydown', function (event) {
         const againButton = document.getElementsByClassName('btn__reset');
         div.classList.add('win');
         div.appendChild(h3);
-        h3.innerHTML = 'You Win!';
+        var answerText = phraseArray.join('');
+        h3.innerHTML = `You Win! It was "${answerText}!"`;
+
         for (let i = 0; i < againButton.length; i += 1) {
             againButton[i].innerHTML = 'Play again';
         }
@@ -224,14 +234,17 @@ document.addEventListener('keydown', function (event) {
         }
 
         missNumber = 0;
-
+        
+        phraseArray.length = 0;
+        
         // Add a new phrase
-        let newPhraseArray = getRandomPhraseAsArray(phrases);
-        addPhraseToDisplay(newPhraseArray);
+        let PhraseArray = getRandomPhraseAsArray(phrases);
+        addPhraseToDisplay(PhraseArray);
 
          // Remove h3 text
         overlay.addEventListener('click', (e) => {
             h3.innerHTML = '';
+            answerText.innerHTML = '';
             div.classList.remove('win');
 
 
@@ -250,7 +263,8 @@ document.addEventListener('keydown', function (event) {
         const tryButton = document.getElementsByClassName('btn__reset');
         div.appendChild(h3);
         div.classList.add('lose');
-        h3.innerHTML = 'You Lose!';
+        var answerText = phraseArray.join('');
+        h3.innerHTML = `You Lose! It was ${answerText}!`;
         for (let i = 0; i < tryButton.length; i += 1) {
             tryButton[i].innerHTML = 'Try again';
         }
@@ -275,9 +289,10 @@ document.addEventListener('keydown', function (event) {
 
         missNumber = 0;
         
+        answerText.length = 0;
         // Add a new phrase
-        let newPhraseArray = getRandomPhraseAsArray(phrases);
-        addPhraseToDisplay(newPhraseArray);
+        let PhraseArray = getRandomPhraseAsArray(phrases);
+        addPhraseToDisplay(PhraseArray);
 
         // Remove h3 text
         overlay.addEventListener('click', (e) => {
