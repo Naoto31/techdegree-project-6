@@ -11,6 +11,7 @@
   --color-neutral-light: #D2D2D2;
   --color-keys: #37474F;
   --color-keys-light: #E5E5E5;
+  --color-fail: orange;
   --font-size-large: 60px;
   --font-size-medium: 20px;
   --transition: all .2s ease-in-out;
@@ -99,6 +100,7 @@ button {
 .show {
   color: #000;
   background-color: #76CE82;
+  transition: 1s;
 }
 
 /* Keyboard */
@@ -110,6 +112,13 @@ button {
 
 .chosen {
   background: var(--color-neutral);
+  border-radius: 5px;
+  font-size: var(--font-size-medium);
+  color: #FFFFFF;
+}
+
+.chosen_fail {
+  background: var(--color-fail);
   border-radius: 5px;
   font-size: var(--font-size-medium);
   color: #FFFFFF;
