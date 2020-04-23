@@ -7,12 +7,17 @@ const phrases = ['Tell me your secret',
     'What is your name',
     'Where are you from'
 ]
+
+const tries = document.querySelectorAll('.tries');
+let letterFound;
+
 var missNumber = 0;
 
 // Overlay disappears by clicking the button
 overlay.addEventListener('click', (e) => {
     overlay.style.display = 'none';
 });
+
 
 function getRandomPhraseAsArray(arr) {
 
@@ -43,36 +48,68 @@ function addPhraseToDisplay(arr) {
 const phraseArray = getRandomPhraseAsArray(phrases);
 addPhraseToDisplay(phraseArray);
 
+// Get a letter from the button that the user click
 
-// function checkLetter
-const lengthOfPhrase = phraseArray.length;
+qwerty.addEventListener('click', e => {
+    if (e.target.tagName === 'BUTTON') {
+        const buttonLetter = e.target.textContent;
+        const match = checkLetter(buttonLetter);
+        if (!match) {
+            tries[missNumber].style.display = 'none';
+            missNumber += 1;
 
-function checkLetter(button) {
-    
-    //Get a button letter
-    for (let i = 0; i < button.length; i += 1) {
-        document.querySelectorAll("button")[i].addEventListener('click', function () {
-            var buttonLetter = this.innerHTML;
-            
-            // get a phraseArrayLetter
-            for (let i = 0; i < lengthOfPhrase; i += 1) {
-                var phraseArrayLetter = phraseArray[i].toLowerCase();
-                let li = document.getElementsByClassName('letter')[i];
-
-                //Condition
-                if (buttonLetter === phraseArrayLetter) {
-                    li.classList.add('show');
-                    var correctLetter = phraseArrayLetter;
-                    return correctLetter;
-                } else {
-                    return null;
-
+            // Lose condition
+            if (missNumber >= 5) {
+                overlay.style.display = '';
+                const h3 = document.createElement('h3');
+                const div = document.getElementById('overlay');
+                const tryButton = document.getElementsByClassName('btn__reset');
+                div.appendChild(h3);
+                h3.innerHTML = 'You Lose!';
+                for (var i = 0; i < tryButton.length; i += 1) {
+                    tryButton[i].innerHTML = 'Try again';
                 }
             }
-        });
-
+        }
     }
+});
+
+// Create a checkLetter function
+
+function checkLetter(buttonLetter) {
+    letterFound = false;
+    const phrase = document.querySelectorAll('.letter');
+    for (let i = 0; i < phrase.length; i += 1) {
+        const letter = phrase[i];
+        if (buttonLetter === letter.textContent.toLowerCase()) {
+            letter.classList.add('show', 'chosen');
+            letterFound = true;
+
+            // Win condition
+            const ul = document.getElementsByTagName('ul')[0];
+            const liWithClassShow = ul.getElementsByClassName('show');
+            const letterLength = liWithClassShow.length;
+            if (letterLength === phrase.length) {
+                overlay.style.display = '';
+                const h3 = document.createElement('h3');
+                const div = document.getElementById('overlay');
+                div.appendChild(h3);
+                h3.innerHTML = 'You Win!';
+
+
+
+            }
+        }
+    }
+    return letterFound;
 }
 
-const numberOfButtons = document.querySelectorAll("button");
-checkLetter(numberOfButtons);
+
+
+
+// Get a letter from the keyboard and pass to the checkLetter function
+
+document.addEventListener('keydown', function (event) {
+    checkLetter(event.key);
+
+});
