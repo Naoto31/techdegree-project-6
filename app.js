@@ -98,9 +98,19 @@ qwerty.addEventListener('click', e => {
                 tries[i].style.display = '';
             }
 
+            missNumber = 0;
+
             // Add a new phrase
             let newPhraseArray = getRandomPhraseAsArray(phrases);
             addPhraseToDisplay(newPhraseArray);
+
+            // Remove h3 text
+            overlay.addEventListener('click', (e) => {
+                h3.innerHTML = '';
+                div.classList.remove('win');
+            });
+            
+    
 
         }
 
@@ -134,9 +144,19 @@ qwerty.addEventListener('click', e => {
                 tries[i].style.display = '';
             }
 
+            missNumber = 0;
+
             // Add a new phrase
             let newPhraseArray = getRandomPhraseAsArray(phrases);
             addPhraseToDisplay(newPhraseArray);
+
+            // Remove h3 text
+            overlay.addEventListener('click', (e) => {
+                h3.innerHTML = '';
+                div.classList.remove('lose');
+            });
+            
+    
 
         }
     }
@@ -203,10 +223,20 @@ document.addEventListener('keydown', function (event) {
             tries[i].style.display = '';
         }
 
+        missNumber = 0;
+
         // Add a new phrase
         let newPhraseArray = getRandomPhraseAsArray(phrases);
         addPhraseToDisplay(newPhraseArray);
 
+         // Remove h3 text
+        overlay.addEventListener('click', (e) => {
+            h3.innerHTML = '';
+            div.classList.remove('win');
+
+
+        });
+        
 
 
     }
@@ -243,15 +273,19 @@ document.addEventListener('keydown', function (event) {
             tries[i].style.display = '';
         }
 
+        missNumber = 0;
+        
         // Add a new phrase
         let newPhraseArray = getRandomPhraseAsArray(phrases);
         addPhraseToDisplay(newPhraseArray);
 
-
+        // Remove h3 text
+        overlay.addEventListener('click', (e) => {
+            h3.innerHTML = '';
+            div.classList.remove('lose');
+        });
+        
     }
-
-
-
 
 
 });
