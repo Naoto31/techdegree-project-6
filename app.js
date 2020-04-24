@@ -76,48 +76,12 @@ qwerty.addEventListener('click', e => {
             const againButton = document.getElementsByClassName('btn__reset');
             div.classList.add('win');
             div.appendChild(h3);
-            var answerText = phraseArray.join('');
-            h3.innerHTML = `You Win! It was "${answerText}!"`;
-
+            outputCurrentPhraseWin(h3);
             for (let i = 0; i < againButton.length; i += 1) {
                 againButton[i].innerHTML = 'Play again';
             }
-            // Remove the old phrase and classes
-            ul.innerHTML = "";
 
-            const buttonTags = document.getElementsByTagName('button');
-            for (let i = 0; i < buttonTags.length; i += 1) {
-                buttonTags[i].classList.remove('chosen');
-            }
-
-            for (let i = 0; i < buttonTags.length; i += 1) {
-                buttonTags[i].classList.remove('chosen_fail');
-            }
-
-            // Initialize the liveHeart
-
-            for (let i = 0; i < 5; i += 1) {
-                tries[i].style.display = '';
-            }
-
-            missNumber = 0;
-
-            answerText.length = 0;
-
-            // Add a new phrase
-            let PhraseArray = getRandomPhraseAsArray(phrases);
-            addPhraseToDisplay(PhraseArray);
-
-            var newAnswerText = newPhraseArray.join('');
-
-            // Remove h3 text
-            overlay.addEventListener('click', (e) => {
-                h3.innerHTML = '';
-                div.classList.remove('win');
-            });
-            
-    
-
+            resetGameWin(ul, h3, div); 
         }
 
         // Lose condition
@@ -128,44 +92,12 @@ qwerty.addEventListener('click', e => {
             const tryButton = document.getElementsByClassName('btn__reset');
             div.appendChild(h3);
             div.classList.add('lose');
-            var answerText = phraseArray.join('');
-            h3.innerHTML = `You Lose! It was ${answerText}!`;
+            outputCurrentPhraseLose(h3);
+
             for (let i = 0; i < tryButton.length; i += 1) {
                 tryButton[i].innerHTML = 'Try again';
             }
-            // Remove the old phrase and classes
-            ul.innerHTML = "";
-
-            const buttonTags = document.getElementsByTagName('button');
-            for (let i = 0; i < buttonTags.length; i += 1) {
-                buttonTags[i].classList.remove('chosen');
-            }
-
-            for (let i = 0; i < buttonTags.length; i += 1) {
-                buttonTags[i].classList.remove('chosen_fail');
-            }
-
-            // Initialize the liveHeart
-
-            for (let i = 0; i < 5; i += 1) {
-                tries[i].style.display = '';
-            }
-
-            missNumber = 0;
-
-            phraseArray = 0;
-            // Add a new phrase
-            let PhraseArray = getRandomPhraseAsArray(phrases);
-            addPhraseToDisplay(PhraseArray);
-
-            // Remove h3 text
-            overlay.addEventListener('click', (e) => {
-                h3.innerHTML = '';
-                div.classList.remove('lose');
-            });
-            
-    
-
+            resetGameLose(ul, h3, div);
         }
     }
 
@@ -208,52 +140,15 @@ document.addEventListener('keydown', function (event) {
         const againButton = document.getElementsByClassName('btn__reset');
         div.classList.add('win');
         div.appendChild(h3);
-        var answerText = phraseArray.join('');
-        h3.innerHTML = `You Win! It was "${answerText}!"`;
+
+        outputCurrentPhraseWin(h3);
 
         for (let i = 0; i < againButton.length; i += 1) {
             againButton[i].innerHTML = 'Play again';
         }
 
-        // Remove the old phrase and classes
-        ul.innerHTML = "";
-
-        const buttonTags = document.getElementsByTagName('button');
-        for (let i = 0; i < buttonTags.length; i += 1) {
-            buttonTags[i].classList.remove('chosen');
-        }
-
-        for (let i = 0; i < buttonTags.length; i += 1) {
-            buttonTags[i].classList.remove('chosen_fail');
-        }
-
-        // Initialize the liveHeart
-
-        for (let i = 0; i < 5; i += 1) {
-            tries[i].style.display = '';
-        }
-
-        missNumber = 0;
-        
-        phraseArray.length = 0;
-        
-        // Add a new phrase
-        let PhraseArray = getRandomPhraseAsArray(phrases);
-        addPhraseToDisplay(PhraseArray);
-
-         // Remove h3 text
-        overlay.addEventListener('click', (e) => {
-            h3.innerHTML = '';
-            answerText.innerHTML = '';
-            div.classList.remove('win');
-
-
-        });
-        
-
-
+        resetGameWin(ul, h3, div);
     }
-
 
     // Lose condition
     if (missNumber >= 5) {
@@ -263,47 +158,22 @@ document.addEventListener('keydown', function (event) {
         const tryButton = document.getElementsByClassName('btn__reset');
         div.appendChild(h3);
         div.classList.add('lose');
-        var answerText = phraseArray.join('');
-        h3.innerHTML = `You Lose! It was ${answerText}!`;
+        outputCurrentPhraseLose(h3);
+
         for (let i = 0; i < tryButton.length; i += 1) {
             tryButton[i].innerHTML = 'Try again';
         }
 
-        // Remove the old phrase and classes
-        ul.innerHTML = "";
-
-        const buttonTags = document.getElementsByTagName('button');
-        for (let i = 0; i < buttonTags.length; i += 1) {
-            buttonTags[i].classList.remove('chosen');
-        }
-
-        for (let i = 0; i < buttonTags.length; i += 1) {
-            buttonTags[i].classList.remove('chosen_fail');
-        }
-
-        // Initialize the liveHeart
-
-        for (let i = 0; i < 5; i += 1) {
-            tries[i].style.display = '';
-        }
-
-        missNumber = 0;
-        
-        answerText.length = 0;
-        // Add a new phrase
-        let PhraseArray = getRandomPhraseAsArray(phrases);
-        addPhraseToDisplay(PhraseArray);
-
-        // Remove h3 text
-        overlay.addEventListener('click', (e) => {
-            h3.innerHTML = '';
-            div.classList.remove('lose');
-        });
-        
+        resetGameLose(ul, h3, div);
     }
 
-
 });
+
+
+
+// *******************************
+//         ⬇ FUNCTIONS ⬇
+// *******************************
 
 
 // Create a checkLetter function
@@ -320,4 +190,104 @@ function checkLetter(buttonLetter, buttonElement) {
         }
     }
     return letterFound;
+}
+
+
+// Function: Get a current phrase and output a "Win" message
+function outputCurrentPhraseWin(h3) {
+    let currentPhrase = [];
+    const phraseLis = document.querySelectorAll('#phrase ul li');
+    phraseLis.forEach(li => {
+        currentPhrase.push(li.textContent);
+    });
+    let answerText = currentPhrase.join('');
+    h3.innerHTML = `You Win! It was "${answerText}!"`;
+
+}
+
+// Function: Get a current phrase and output a "Lose" message
+function outputCurrentPhraseLose(h3) {
+    let currentPhrase = [];
+    const phraseLis = document.querySelectorAll('#phrase ul li');
+    phraseLis.forEach(li => {
+        currentPhrase.push(li.textContent);
+    });
+    let answerText = currentPhrase.join('');
+    h3.innerHTML = `You Lose! It was "${answerText}"!`;
+}
+
+// Function: Reset a game "Win"
+
+function resetGameWin(ul, h3, div) {
+
+     // Remove the old phrase and classes
+     ul.innerHTML = "";
+
+     const buttonTags = document.getElementsByTagName('button');
+     for (let i = 0; i < buttonTags.length; i += 1) {
+         buttonTags[i].classList.remove('chosen');
+     }
+
+     for (let i = 0; i < buttonTags.length; i += 1) {
+         buttonTags[i].classList.remove('chosen_fail');
+     }
+
+     // Initialize the liveHeart
+
+     for (let i = 0; i < 5; i += 1) {
+         tries[i].style.display = '';
+     }
+
+     missNumber = 0;
+
+     // answerText.length = 0;
+
+     // Add a new phrase
+     let PhraseArray = getRandomPhraseAsArray(phrases);
+     addPhraseToDisplay(PhraseArray);
+
+     // Remove h3 text
+     overlay.addEventListener('click', (e) => {
+         h3.innerHTML = '';
+         // answerText.innerHTML = '';
+         div.classList.remove('win');
+
+
+     });
+}
+
+// Function: Reset a game "Lose"
+
+function resetGameLose(ul, h3, div) {
+    // Remove the old phrase and classes
+    ul.innerHTML = "";
+
+    const buttonTags = document.getElementsByTagName('button');
+    for (let i = 0; i < buttonTags.length; i += 1) {
+        buttonTags[i].classList.remove('chosen');
+    }
+
+    for (let i = 0; i < buttonTags.length; i += 1) {
+        buttonTags[i].classList.remove('chosen_fail');
+    }
+
+    // Initialize the liveHeart
+
+    for (let i = 0; i < 5; i += 1) {
+        tries[i].style.display = '';
+    }
+
+    missNumber = 0;
+
+    // Add a new phrase
+    let PhraseArray = getRandomPhraseAsArray(phrases);
+    addPhraseToDisplay(PhraseArray);
+
+    // Remove h3 text
+    overlay.addEventListener('click', (e) => {
+        h3.innerHTML = '';
+        div.classList.remove('lose');
+    });
+
+
 }
