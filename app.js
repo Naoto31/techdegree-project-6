@@ -55,6 +55,7 @@ qwerty.addEventListener('click', e => {
         const buttonLetter = e.target.textContent;
         const buttonElement = e.target;
         const match = checkLetter(buttonLetter, buttonElement);
+        buttonElement.setAttribute('disabled', 'true');
 
         const phrase = document.querySelectorAll('.letter');
         const ul = document.getElementsByTagName('ul')[0];
@@ -66,6 +67,7 @@ qwerty.addEventListener('click', e => {
             tries[missNumber].style.display = 'none';
             missNumber += 1;
             buttonElement.classList.add('chosen_fail');
+
         }
 
         // Win condition
@@ -81,7 +83,9 @@ qwerty.addEventListener('click', e => {
                 againButton[i].innerHTML = 'Play again';
             }
 
-            resetGameWin(ul, h3, div); 
+            resetGameWin(ul, h3, div);
+
+
         }
 
         // Lose condition
@@ -98,6 +102,7 @@ qwerty.addEventListener('click', e => {
                 tryButton[i].innerHTML = 'Try again';
             }
             resetGameLose(ul, h3, div);
+
         }
     }
 
@@ -105,11 +110,26 @@ qwerty.addEventListener('click', e => {
 
 // Get a letter from the keyboard and pass to the checkLetter function
 
+const qwertyButtonElement = document.querySelectorAll('.keyrow button');
+const qwertyButtonLength = qwertyButtonElement.length;
+
 document.addEventListener('keydown', function (event) {
     const buttonLetter = event.key;
+
+    // Make missNumber remain as it is even though the player types the same wrong letter again and again
+    for (let i = 0; i < qwertyButtonLength; i += 1) {
+        var classContain = qwertyButtonElement[i].classList.contains('chosen_fail');
+        var buttonKeyboardLetter = qwertyButtonElement[i].innerHTML;
+        if (classContain && buttonLetter === buttonKeyboardLetter) {
+            return missNumber;
+        }
+    }
+
     const buttonTags = document.getElementsByTagName('button');
     const searchLetter = buttonLetter;
     var found;
+    if (event.which === 8 && $.inArray(event.target.tagName, inputTags) === -1)
+        event.preventDefault();
 
     for (let i = 0; i < buttonTags.length; i += 1) {
         if (buttonTags[i].textContent === searchLetter) {
@@ -124,12 +144,14 @@ document.addEventListener('keydown', function (event) {
     const ul = document.getElementsByTagName('ul')[0];
     const liWithClassShow = ul.getElementsByClassName('show');
     const letterLength = liWithClassShow.length;
+    buttonElement.setAttribute('disabled', 'true');
 
 
     if (!match) {
         tries[missNumber].style.display = 'none';
         missNumber += 1;
         buttonElement.classList.add('chosen_fail');
+
     }
 
     // Win condition
@@ -148,6 +170,8 @@ document.addEventListener('keydown', function (event) {
         }
 
         resetGameWin(ul, h3, div);
+
+
     }
 
     // Lose condition
@@ -176,7 +200,7 @@ document.addEventListener('keydown', function (event) {
 // *******************************
 
 
-// Create a checkLetter function
+// Function: Check a letter
 
 function checkLetter(buttonLetter, buttonElement) {
     letterFound = false;
@@ -220,40 +244,40 @@ function outputCurrentPhraseLose(h3) {
 
 function resetGameWin(ul, h3, div) {
 
-     // Remove the old phrase and classes
-     ul.innerHTML = "";
+    // Remove the old phrase and classes
+    ul.innerHTML = "";
 
-     const buttonTags = document.getElementsByTagName('button');
-     for (let i = 0; i < buttonTags.length; i += 1) {
-         buttonTags[i].classList.remove('chosen');
-     }
+    const buttonTags = document.getElementsByTagName('button');
+    for (let i = 0; i < buttonTags.length; i += 1) {
+        buttonTags[i].classList.remove('chosen');
+    }
 
-     for (let i = 0; i < buttonTags.length; i += 1) {
-         buttonTags[i].classList.remove('chosen_fail');
-     }
+    for (let i = 0; i < buttonTags.length; i += 1) {
+        buttonTags[i].classList.remove('chosen_fail');
+        buttonTags[i].disabled = false;
+    }
 
-     // Initialize the liveHeart
+    // Initialize the liveHeart
 
-     for (let i = 0; i < 5; i += 1) {
-         tries[i].style.display = '';
-     }
+    for (let i = 0; i < 5; i += 1) {
+        tries[i].style.display = '';
+    }
 
-     missNumber = 0;
+    missNumber = 0;
 
-     // answerText.length = 0;
+    // answerText.length = 0;
 
-     // Add a new phrase
-     let PhraseArray = getRandomPhraseAsArray(phrases);
-     addPhraseToDisplay(PhraseArray);
+    // Add a new phrase
+    let PhraseArray = getRandomPhraseAsArray(phrases);
+    addPhraseToDisplay(PhraseArray);
 
-     // Remove h3 text
-     overlay.addEventListener('click', (e) => {
-         h3.innerHTML = '';
-         // answerText.innerHTML = '';
-         div.classList.remove('win');
+    // Remove h3 text
+    overlay.addEventListener('click', (e) => {
+        h3.innerHTML = '';
+        // answerText.innerHTML = '';
+        div.classList.remove('win');
 
-
-     });
+    });
 }
 
 // Function: Reset a game "Lose"
@@ -269,6 +293,7 @@ function resetGameLose(ul, h3, div) {
 
     for (let i = 0; i < buttonTags.length; i += 1) {
         buttonTags[i].classList.remove('chosen_fail');
+        buttonTags[i].disabled = false;
     }
 
     // Initialize the liveHeart
